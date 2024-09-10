@@ -1,0 +1,109 @@
+linear and timeinvariant systems (LTI)
+
+
+- Single input-single output system (SISO system)
+
+	x(t) -> S -> y(t)
+	input        output
+
+Linearity Property:
+	- addition property
+		x1(t) -> S -> y1(t)  -> x(t)= x1(t) + x2(t) -> S -> y(t) = y1(t) + y2(t)
+		x2(t) -> S -> y2(t)
+	for all x1(t) & x2(t)
+	
+	- Scaling Propterty
+		x(t) -> S -> y(t)
+		Kx(t) -> S -> Ky(t) for all constants K and x(t)
+
+or equivalently a system is called linear if all x1(t), x2(t) and 
+constants a and B the following hold
+
+	x1(t) -> S -> y1(t) 
+	x2(t) -> S -> y2(t)	x(t) = Ax1(t) + Bx2(t) -> S -> y(t)
+						y(t) = Ay1(t) + By2(t)
+
+Example: is the system described by the following input-output relation linear?
+
+	y(t) = 2x(t) + 1 
+
+1) addition test?
+	-> x1(t) -> S -> y1(t) = 2x1(t) + 1
+	   x2(t) -> S -> y2(t) = 2x2(t) + 1
+   now apply x(t) = x1(t) + x2(t)
+
+	y(t) = 2x(t) + 1 = 2(x1(t) + x2(t)) +1
+	     = 2x1(t) + 2x2(t) + 1
+	     = (y1(t) -1) + (y2(t) - 1) + 1
+	     = y1(t) + y2(t) - 1 != y1(t) + y2(t) 
+   System does not have additional property -> not linear
+
+2) Scaling property
+	x1(t) -> S -> y1(t)
+	x(t) = kx1(t) -> S -> y(t) = ky1(t)
+
+	y(t) = 2x(t) + 1 = 2(kx1(t)) + 1
+	     = 2Kx(t) +1 = K(y1(t) -1) + 1
+	     = Ky1(t) - k + 1 != ky1(t)
+or
+
+	x1(t) -> S -> y1(t) = 2x1(t) + 1
+	x2(t) -> S -> y2(t) = 2x2(t) + 1
+		x(t) = ax1(t)+bx2(t) -> S -> y(t)
+
+	y(t) = 2x(t)+1 = 2(Ax1(t) + Bx2(t)) + 1
+	     = 2Ax1(t) + 2Bx2(t) + 1
+	     = A(y1(t) - 1) + B(y2(t) - 1) + 1
+	     = Ay1(t) + By2(t) - A - B + 1 != Ay1(t) + By2(t) => NOT Linear
+
+Example: use MATLAB to show that this system is in fact not linear.
+	 Assume x1(t) = u(t) and x2(t) = u(t-1)
+	 and a = 1, b = 2.
+
+Example: show that y(t) = 2x(t) is a linear system
+
+
+Time-Inveriance Property
+	x1(t) -> S -> y1(t)
+	x(t) = x1(t-T) -> S -> y(t) = y1(t-T)
+
+-System with constant parameters are in fact time-invariant.
+
+Example: A system is given by I/O relationship
+	y(t) = [x(t)]^2 + 1
+	is the system time-invariant 
+	since the system parameters are constants (not time dependent)
+	the system is time-invariant
+proof: x1(t) -> S -> y1(t) = [x1(t)]^2 + 1
+	x(t) = x1(t-t) 
+		----------> S ------> y(t)= [x(t)]^2 + 1
+	need to show y(t) = y1(t-T)
+
+	y(t) = [x1(t-T)]^2 + 1 
+	y1(t-T) = [x1(t-T)]^2 + 1  ==> y(t) = y1(t-T) time invariant
+
+example : is the following system tim=invariant?
+	x1(t) -> S -> y1(t) = tx1(t) + 1
+	x(t) = x1(t-T) 
+		----> S ----> y(t) = tx(t) + 1
+
+				   = tx1(t-T) + 1 ?= y1(t-T)
+
+	y1(t) = tx1(t)+1 -> y1(t-T) = (t-T)x1(t-T) + 1
+	since y(t) != y1(t-T) the system is no time-invariant
+
+Example 1) y(t) = ax(t) is Linear, is Time-invariant 
+						= LTI
+
+	2) y(t) = atx(t) Linear but not Time-invariant
+
+	3) y(t) = ax(t) + 1 not Linear but is time-invariant
+	4) y(t) = atx(t) + 1 neither linear or TI
+
+Example: use MATLAB to show taht system with I/O relationships y(t) = tx(t) + 1 is not 
+	time-invariant. assume x(t) = u(t) and T=3
+
+
+in fact all systems described by tge following ODE, in whih all coefficents ak & bk are constants, are LTI
+
+(d^(n) * y(t))/ (dt)^n + An-1 dn
