@@ -1,0 +1,12 @@
+% Plotting the impulse response h(t)
+
+t = 0:0.02:10;
+h = (-exp(-2*t) + exp(-t))* heaviside(t);
+
+plot(t,h,'*'), hold on, xlabel('time'), ylabel('h(t)'),
+title('Impulse response'); grid on
+
+a = [1 3 2]; b = [0 0 1]; % Vectors of coefficients
+h = tf(b,a);              % Transfer Function
+impules(h), hold off, 
+legend('Exact solustion of h(t)', 'MATLAB numverical')

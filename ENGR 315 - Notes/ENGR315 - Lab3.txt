@@ -1,0 +1,140 @@
+Lab3 - Solutions to ODE and inpulse response of LTI systems.
+
+Consider an LTI systems represented by the ODE 
+
+	(d^n y(t) / dt^n) + an-1 (d^n-1 y(t)/ dt^n-1) + ... + a1 (dy(t)/dt) + a0y(t) =
+		bm(dx^m(t)/dt^m)+ ... + b1(dx(t)/dt) + b0x(t)
+
+	x(t) --> LTI --> y(t)
+	input		 output
+
+In which all ai i=n,...,n-1, and bj j=1,..,m are constants.
+we are going to solve this ODE to find systems inpules response h(t)
+
+	delta(t) --> LTI --> h(t)		*delta greek sybol
+	unit inpule	   inpules response
+
+The inpules response h(t) is the system response to the unite inpules delta(t) at input.
+
+	{delta(t)dt = 1
+	f(t) delta(t-t0) = f(t0)delta(t-to)
+	{f(t) delta(t-t0) = f(t0)
+
+	delta(t) --> LTI --> *h(t)*
+	*x(t)* --> LTI --> y(t)
+
+Solution of ODE to get h(t)
+Special case:
+		d^ny(t)/dt + ... + a1 dy(t)/dt + a0 y(t) = b0 x(t)
+
+example: consider an LTI system given by the following ODE 
+	dy(t)/dt + 2y(t) = 2x(t)	-1st order system
+
+Assume zero initial condistions (system at rest)
+	y(0-) = 0
+
+Find the inpulse response of the system h(t)
+for x(t) = delta(t) unit inpulse y(t) = h(t)
+
+Inpulse Matching Prodecure 
+	dy(t)/dt + 2y(t) = 2 delta(t) 
+	delta      step      delta
+
+	dy(t)/dt = 2 delta(t) --> intergrate -->  {(dy(t)/dt)dt = 2{delta(t)dt
+
+	{dy = 2(1) ==> y(o+) - y(o-) = 2;
+
+	y(o+) = 2
+
+	dy(t)/dt + 2y(t) = 2x(t)
+
+	characteristic equation: s+2 = 0	d/dt -> s
+				 eigen value = -2
+				 e^(-2t) eigenfunction
+	y(t) = Ae^(-2t)		t>=o+
+	
+
+for t = o+ we have y(o+) = 2, therefore,
+	2 = Ae^(-2(o+))
+	h(t) = y(t) = 2e^(-2t) t>o+ inpulse response
+
+example: find h(t) for an LTI system described by
+	d^2(y(t))/dt^2 + 3 dy(t)/dt + 2 y(t) = x(t)
+assume the system is at rest for t <= o-.
+y(o-) = 0 , dy(o-)/dt = 0, ICa
+Apply inpulse metching procedure to find y(o+), dy(o+)/dt
+
+	d^2y(t)/dt^2 + 3 dy(t)/dt + 2y(t) = delta(t)
+	detla		 step	    ramp
+
+	d^2y(t)/dt^2 = delta(t) => {(d^2y(t)/dt^2)dt = {delta(t)dt
+	[dy(t)/dt] = 1 => y'(o+) - y'(o-) = 1
+	=> y'(o+) = dy(o+)/dt = 1
+since y(t) is at ramp function at t = 0 it is continous 
+	y(o+) = y(o-) = 0 IC2
+
+	d^2y(t)/dt^2 + 3 dy(t)/dt + 2y(t) = x(t)
+	S^2 + 3S + 2 + 0 C.E.
+eigenvalue: eigen1 = -2, eigen2 = -1
+eigen function : e^(-2t), e^(-t)
+
+	y(t) = A e^(-2t) + B e^(-t)	IC y(o+) = 0 , y'(o+) = 1
+
+	t=o+ => y(o+) = A + B = 0
+	dy(t)/dt = -2Ae^(-2t) - Be^(-t) => y'(o+) = 2A - B = 1
+
+	A+B = 0		[ 1  1] * [A] = [ 0]
+	-2A-B=-2	[-2 -1]   [B]   [-1]
+
+	[A] = [1   1]^-1 * [0] = a^-1*b
+	[B]   [-2 -1]	   [1]
+	A = 1, B = 1
+	h(t) = y(t) = -e^(-2t) + e^(-t) t=>o+
+
+using impulse function in MATLAB.
+
+	d^2(y(t))/dt^2 + 3 dy(t)/dt + 2 y(t) = x(t)
+	a = [1 3 2]			       b = [ 0 0 1]  vectors of ODE coefficents
+	       transfer function
+	>> h = ft(b,a);
+	>> impulse(h)
+
+Example find the exact solution for the impules response of an LTI system with I/O ODE
+
+	(d^3 y(t)/dt^3) + 10 (d^2 y(t)/dt^2) + 29 (dy(t)/dt) + 20 y(t) = 20 x(t)  ~3rd order
+
+	assume zero initial conditions y(o-) = y'(o-) = y''(o-) = 0
+
+	b) plot h(t) found in part (a) for 0<t<10
+	c) compare the plot in (b) with MATLAB numerical solution using impulse command
+
+	(d^3 y(t)/dt^3) + 10 (d^2 y(t)/dt^2) + 29 (dy(t)/dt) + 20 y(t) = 20 x(t)
+	impulse		     step		  ramp		  quadratic
+
+note y(t) and dy(t)/dt are continuous at t = 0, i.e, 
+	y(o+) = y(o-) = 0 , y'(o+) = y'(o-) = 0
+
+matching: d^3y(t)/dt^3  = 20delt(t)
+
+	y'''(o+) - y'''(o-) = 20 => y'''(o+) = 20
+
+C.E 	S^3 + 10S^2 + 29S + 20 = 0
+
+	ev1 = -5 ev2 = -4 ev3 = -1
+
+	y(t) = A1e^(-5t) + A2e^(-4t) + A3e^(-t)
+
+y(o+)   = 0 	  A1 +  A2  + A3 = 0
+y'(o+)  = 0	-5A1 -  4A2 - A3 = 0
+y''(o+) = 20	25A1 + 16A2 + A3 = 20
+
+
+	[ 1   1  1]   [A1]   [ 0]	[A1]
+	[-5  -4 -1] * [A2] = [ 0]  =>   [A2] = A^-1 * B
+	[ 25 16  1]   [A3]   [20]	[A3]
+		 A             B 	
+
+	A1 = 5,	A2 = -6.6667, A3 = 1.6667,
+
+
+	h(t) = y(t) = 5e^(-5T) - 6.6667e^(-4t) + 1.6667e^(-t)

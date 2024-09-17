@@ -107,3 +107,5 @@ Example: use MATLAB to show taht system with I/O relationships y(t) = tx(t) + 1 
 in fact all systems described by tge following ODE, in whih all coefficents ak & bk are constants, are LTI
 
 (d^(n) * y(t))/ (dt)^n + An-1 dn
+
+
